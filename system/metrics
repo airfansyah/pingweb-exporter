@@ -1,0 +1,2 @@
+pingweb{app="service-a"} 1
+pingweb{app="service-b"} 1

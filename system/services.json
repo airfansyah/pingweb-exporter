@@ -1,0 +1,10 @@
+[
+  {
+    "name": "serviceA",
+    "url": "https://yourservice-A.domain/ping"
+  },
+  {
+    "name": "serviceB",
+    "url": "https://yourservie-B.domain/ping"
+  }
+]

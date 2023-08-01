@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingweb-exporter
+spec:
+  selector:
+    matchLabels:
+      app: pingweb-exporter
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pingweb-exporter
+    spec:
+      containers:
+      - name: pingweb-exporter
+        image: airfansyah/pingweb-exporter:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: pingweb-services
+            mountPath: /pingweb-exporter/services.json
+            subPath: services.json
+      volumes:
+        - name: pingweb-services
+          secret:
+            secretName: pingweb-services
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: pingweb-exporter
+  name: pingweb-exporter
+spec:
+  type: NodePort
+  sessionAffinity: None
+  selector:
+    app: pingweb-exporter
+  ports:
+  - port: 9100
+    protocol: TCP
+    targetPort: 80
